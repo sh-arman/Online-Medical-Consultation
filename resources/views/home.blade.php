@@ -1,4 +1,4 @@
-@extends('layputs.app')
+@extends('layouts.app')
 @section('content')
 
 			<!-- Home Banner -->
