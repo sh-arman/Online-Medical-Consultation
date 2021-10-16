@@ -70,18 +70,18 @@
                                 <li><a href="invoice-view.html">Invoice View</a></li>
                             </ul>
                         </li>
-                        <li class="active"><a href="blank-page.html">Starter Page</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
-                        <li><a href="forgot-password.html">Forgot Password</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="admin/index.html" target="_blank">Admin</a>
-                </li>
-                <li class="login-link">
-                    <a href="login.html">Login / Signup</a>
-                </li>
+                @if ( Auth::check() && Auth::user()->is_admin ==1 )
+                    <li>
+                        <a href="{{ route('admin_dashboard') }}" target="_blank">Admin Dashboard</a>
+                    </li>
+                @endif
+                @if ( Auth::check() &&  Auth::user()->is_doctor ==1 )
+                    <li>
+                        <a href="{{ route('doctor_dashboard') }}" target="_blank">Doctor Dashboard</a>
+                    </li>
+                @endif
             </ul>
         </div>
         <ul class="nav header-navbar-rht">
@@ -90,10 +90,12 @@
                     <i class="far fa-hospital"></i>
                 </div>
                 <div class="header-contact-detail">
-                    <p class="contact-header">Contact</p>
+                    <p class="contact-header">Emergency Contact</p>
                     <p class="contact-info-header"> +880 1947423947</p>
                 </div>
+
             </li>
+            {{-- @endif --}}
             <li class="nav-item">
 
                 {{---
