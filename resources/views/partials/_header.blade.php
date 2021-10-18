@@ -41,11 +41,11 @@
                     </ul>
                 </li>
                 <li class="has-submenu">
-                    <a href="#">Patients <i class="fas fa-chevron-down"></i></a>
+                    <a href="#">Doctor <i class="fas fa-chevron-down"></i></a>
                     <ul class="submenu">
-                        <li><a href="search.html">Search Doctor</a></li>
-                        <li><a href="doctor-profile.html">Doctor Profile</a></li>
-                        <li><a href="booking.html">Booking</a></li>
+                        {{-- <li><a href="search.html">Search Doctor</a></li> --}}
+                        <li><a href="doctor-profile.html">Doctor List</a></li>
+                        <li><a href="booking.html">Appointment</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="booking-success.html">Booking Success</a></li>
                         <li><a href="patient-dashboard.html">Patient Dashboard</a></li>
@@ -72,6 +72,11 @@
                         </li>
                     </ul>
                 </li>
+                @if ( Auth::check())
+                    <li>
+                        <a href="{{ route('user_dashboard') }}" target="_blank">User Dahsboard</a>
+                    </li>
+                @endif
                 @if ( Auth::check() && Auth::user()->is_admin ==1 )
                     <li>
                         <a href="{{ route('admin_dashboard') }}" target="_blank">Admin Dashboard</a>

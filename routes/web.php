@@ -1,20 +1,23 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 // visiting page
 Route::view('/', 'welcome');
 
 Auth::routes();
+Route::get('/home', [Controller::class, 'index'])->name('home');
 
 
 // Users -----------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth'], function()
 {
-    Route::get('/home', [UserController::class, 'index'])->name('home');
+    Route::get('/dashboard', [UserController::class,'dashboard'])->name('user_dashboard');
 });
 
 // Admins ----------------------------------------------------------------------------------
@@ -30,9 +33,9 @@ Route::group(['prefix' => 'doctor',  'middleware' =>'doctor'], function()
 });
 
 // Pages
-Route::view('/privacy', 'page/privacy')->name('privacy');
-Route::view('/search', 'page/search')->name('search');
-Route::view('/terms', 'page/terms')->name('terms');
+Route::view('/privacy', [PageController::class,'privacy'])->name('privacy');
+Route::view('/search', [PageController::class,'search'])->name('search');
+Route::view('/terms', [PageController::class,'terms'])->name('terms');
 
 
 // Admin

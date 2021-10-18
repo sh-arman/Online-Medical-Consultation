@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('doctor');
+    }
+
     public function dashboard()
     {
-        return 'doctor';
+        return view('doctor.doctor-dashboard');
     }
 }

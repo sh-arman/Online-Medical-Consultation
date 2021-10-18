@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function dashboard()
     {
-        return 'admin';
+        return view('doctor.doctor-dashboard');
     }
 }

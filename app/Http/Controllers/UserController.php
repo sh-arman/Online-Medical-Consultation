@@ -11,8 +11,8 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function dashboard()
     {
-        return view('home');
+        return view('patient.patient-dashboard');
     }
 }
