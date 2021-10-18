@@ -1,33 +1,44 @@
 <?php
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// visiting page
+Route::view('/', 'welcome');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Pages Controller
-Route::view('/index', 'page/index')->name('index');
-Route::view('/privacy', 'page/privacy')->name('privacy');
-Route::view('/search', 'page/search')->name('search');
-Route::view('/terms', 'page/terms')->name('terms');
+Route::get('/home', [Controller::class, 'index'])->name('home');
 
 
-// Admin Controller
-Route::view('/admin/dashboard', 'admin/dashboard')->name('admin.dashboard');
+// Users -----------------------------------------------------------------------------------
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/dashboard', [UserController::class,'dashboard'])->name('user_dashboard');
+});
+
+// Admins ----------------------------------------------------------------------------------
+Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function()
+{
+    Route::get('/dashboard', [AdminController::class,'dashboard'])->name('admin_dashboard');
+});
+
+// Doctors --------------------------------------------------------------------------------
+Route::group(['prefix' => 'doctor',  'middleware' =>'doctor'], function()
+{
+    Route::get('/dashboard', [DoctorController::class,'dashboard'])->name('doctor_dashboard');
+});
+
+// Pages
+Route::view('/privacy', [PageController::class,'privacy'])->name('privacy');
+Route::view('/search', [PageController::class,'search'])->name('search');
+Route::view('/terms', [PageController::class,'terms'])->name('terms');
+
+
+// Admin
+// Route::view('/admin/dashboard', 'admin/dashboard')->name('admin.dashboard');
 Route::view('/admin/appointment-list', 'admin/appointment-list')->name('admin.appointment-list');
 Route::view('/admin/doctor-list', 'admin/doctor-list')->name('admin.doctor-list');
