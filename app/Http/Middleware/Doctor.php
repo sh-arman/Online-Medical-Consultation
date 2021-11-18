@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Admin
+class Doctor
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->is_admin == 1){
+        if(auth()->user()->is_doctor == 1){
             return $next($request);
         }
-        return redirect()->back()->with('error',"Only admin can access!");
+        return redirect()->back()->with('error',"Only doctor can access!");
     }
 }
